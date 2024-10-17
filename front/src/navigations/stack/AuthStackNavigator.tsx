@@ -3,55 +3,53 @@ import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthHomeScreen from '../../screens/auth/AuthHomeScreen';
 import LoginScreen from '../../screens/auth/LoginScreen';
+import SignupScreen from '../../screens/auth/SignupScreen';
 import {authNaviagtions} from '../../constants';
-import SignupScreen from '../../screens/auth/SignScreen';
-
-const AuthNavigations = {
-    AUTH_HOME: 'AuthHome',
-    LOGIN: 'Login',
-} as const;
 
 export type AuthStackParamList = {
-    [authNaviagtions.AUTH_HOME]: undefined;
-    [authNaviagtions.LOGIN]: undefined;
-    [authNaviagtions.SIGN_UP]: undefined;
+  [authNaviagtions.AUTH_HOME]: undefined;
+  [authNaviagtions.LOGIN]: undefined;
+  [authNaviagtions.SIGNUP]: undefined;
 };
 
-function AuthStackNavigator() {
-  const Stack = createStackNavigator<AuthStackParamList>();
+const Stack = createStackNavigator<AuthStackParamList>();
 
+function AuthStackNavigator() {
   return (
-    <Stack.Navigator screenOptions={{
-      cardStyle:{
-        backgroundColor: 'white',
-      },
-      headerStyle:{
-        backgroundColor: 'white',
-        shadowColor: 'gray',
-      },
-      headerTitleStyle: {
-        fontSize: 15,
-      },
-      headerTintColor: 'black',
-    }}>
+    <Stack.Navigator
+      screenOptions={{
+        cardStyle: {
+          backgroundColor: 'white',
+        },
+        headerStyle: {
+          shadowColor: 'gray',
+          backgroundColor: 'white',
+        },
+        headerTitleStyle: {
+          fontSize: 15,
+        },
+        headerTintColor: 'black',
+      }}>
       <Stack.Screen
         name={authNaviagtions.AUTH_HOME}
         component={AuthHomeScreen}
         options={{
           headerTitle: ' ',
-          headerShown: false
+          headerShown: false,
         }}
       />
-      <Stack.Screen name={authNaviagtions.LOGIN} 
-        component={LoginScreen} 
+      <Stack.Screen
+        name={authNaviagtions.LOGIN}
+        component={LoginScreen}
         options={{
-          headerTitle: '로그인'
+          headerTitle: '로그인',
         }}
       />
-      <Stack.Screen name={authNaviagtions.SIGN_UP} 
-        component={SignupScreen} 
+      <Stack.Screen
+        name={authNaviagtions.SIGNUP}
+        component={SignupScreen}
         options={{
-          headerTitle: '회원가입'
+          headerTitle: '회원가입',
         }}
       />
     </Stack.Navigator>
