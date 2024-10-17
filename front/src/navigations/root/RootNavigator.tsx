@@ -1,4 +1,4 @@
-import AuthStackNavigator from "../AuthStackNavigator";
+import AuthStackNavigator from "../stack/AuthStackNavigator";
 import MainDrawerNavigator from "../drawer/MainDrawerNavigator";
 
 function RootNavigator() {
