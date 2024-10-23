@@ -1,4 +1,4 @@
-import { ImageUri, Post } from "@/types/domain";
+import { ImageUri, Post } from "@/types";
 import axiosInstance from "./axios";
 
 type ResponsePost = Post & {images: ImageUri[]};
