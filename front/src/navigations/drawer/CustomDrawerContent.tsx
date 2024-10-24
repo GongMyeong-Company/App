@@ -2,6 +2,7 @@ import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } 
 import {Image, Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {colors} from '@/constants';
 import useAuth from '@/hooks/queries/useAuth';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
     const {logoutMutation, getProfileQuery} = useAuth();
@@ -43,7 +44,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
 
         </DrawerContentScrollView>
         <Pressable style={{alignItems: 'flex-end', padding: 10}} onPress={handleLogout}>
-            <Text>Logout</Text>
+            <MaterialIcons name='logout' color={colors.GRAY_500} size={20} />
         </Pressable>
         </SafeAreaView>
     );
