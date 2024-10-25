@@ -109,7 +109,7 @@ function MapHomeScreen() {
         ))}
         {selectLocation && (
           <Callout>
-            <Marker coordinate={selectLocation} />
+            <CustomMarker score={5} color='WHITE' coordinate={selectLocation} />
           </Callout>
         )}
       </MapView>

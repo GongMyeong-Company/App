@@ -17,6 +17,7 @@ const colorHex = {
   GREEN: colors.GREEN_400,
   YELLOW: colors.YELLOW_400,
   PURPLE: colors.PURPLE_400,
+  WHITE: colors.WHITE,
 };
 
 function CustomMarker({

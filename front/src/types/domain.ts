@@ -1,4 +1,4 @@
-type MarkerColor = 'RED' | 'YELLOW' | 'GREEN' | 'BLUE' | 'PURPLE';
+type MarkerColor = 'RED' | 'YELLOW' | 'GREEN' | 'BLUE' | 'PURPLE' | 'WHITE';
 
 type Category = {
   [key in MarkerColor]: string;
