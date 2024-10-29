@@ -30,7 +30,6 @@ function CustomButton({
       disabled={inValid}
       style={({pressed}) => [
         styles.container,
-        styles[size],
         pressed ? styles[`${variant}Pressed`] : styles[variant],
         inValid && styles.inValid,
       ]}

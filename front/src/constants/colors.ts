@@ -3,10 +3,14 @@ const colors = {
   // PINK_400: '#EC87A5',
   // PINK_500: '#BF5C79',
   // PINK_700: '#C63B64',
-  PINK_200: '#B4E0FF', //드로우네비 색상
+  // PINK_200: '#B4E0FF', //드로우네비 색상
+  // PINK_400: '#EC87A5', //마커 색상
+  // PINK_500: '#1876FB', //버튼 클릭시 색상
+  // PINK_700: '#2A52BE', //버튼 색상
+  PINK_200: '#D4E7C5', //드로우네비 색상
   PINK_400: '#EC87A5', //마커 색상
-  PINK_500: '#1876FB', //버튼 클릭시 색상
-  PINK_700: '#2A52BE', //버튼 색상
+  PINK_500: '#BFD8AF', //버튼 클릭시 색상
+  PINK_700: '#99BC85', //버튼 색상
   
   RED_300: '#FFB4B4',
   RED_500: '#FF5F5F',
@@ -27,4 +31,13 @@ const colors = {
   BLACK: '#000',
 };
 
-export {colors};
+const colorHex = {
+  RED: colors.PINK_400,
+  BLUE: colors.BLUE_400,
+  GREEN: colors.GREEN_400,
+  YELLOW: colors.YELLOW_400,
+  PURPLE: colors.PURPLE_400,
+  WHITE: colors.WHITE,
+} as const;
+
+export {colors, colorHex};
