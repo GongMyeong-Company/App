@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dimensions,
   Image,
@@ -25,6 +25,9 @@ import { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MainDrawerParamList } from '@/navigations/drawer/MainDrawerNavigator';
 import useLocationStore from '@/store/useLocationStore';
+import useModal from '@/hooks/useModal';
+import FeedDetailOption from '@/components/feed/FeedDetailOption';
+import useDetailStore from '@/store/useDetailPostStore';
 
 type FeedDetailScreenProps = CompositeScreenProps< 
 StackScreenProps<FeedStackParamList, typeof feedNavigations.FEED_DETAIL>, 
@@ -36,6 +39,12 @@ function FeedDetailScreen({route, navigation}: FeedDetailScreenProps) {
   const {data: post, isPending, isError} = useGetPost(id);
   const insets = useSafeAreaInsets();
   const {setMoveLocation} = useLocationStore();
+  const {setDetailPost} = useDetailStore();
+  const detailOption = useModal();
+
+  useEffect(()=>{
+    post && setDetailPost(post);
+  }, [post]);
 
   if (isPending || isError) {
     return <></>;
@@ -66,7 +75,7 @@ function FeedDetailScreen({route, navigation}: FeedDetailScreenProps) {
             color={colors.WHITE}
             onPress={() => navigation.goBack()}
           />
-          <Ionicons name="ellipsis-vertical" size={30} color={colors.WHITE} />
+          <Ionicons name="ellipsis-vertical" size={30} color={colors.WHITE} onPress={detailOption.show} />
         </View>
       </SafeAreaView>
 
@@ -145,9 +154,11 @@ function FeedDetailScreen({route, navigation}: FeedDetailScreenProps) {
         ])}>
           <Octicons name='star-fill' size={30} color={colors.GRAY_100} />
         </Pressable>
-        <CustomButton label='위치보기' size='medium' variant='filled' onPress={handlePressLocation} />
+        <CustomButton label='위치보기' size='medium' variant='filled' onPress={handlePressLocation} />
       </View>
     </View>
+
+    <FeedDetailOption isVisible={detailOption.isVisible} hideOption={detailOption.hide} />
     </>
   );
 }
