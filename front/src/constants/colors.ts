@@ -20,6 +20,7 @@ const colors = {
 
   GREEN_400: '#CCE6BA', //마커 색상
   YELLOW_400: '#FFE594', //마커 색상
+  YELLOW_500: '#FACC15',
   PURPLE_400: '#C4C4E7', //마커 색상
   WHITE: '#FFF',
 
