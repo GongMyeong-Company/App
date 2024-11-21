@@ -1,14 +1,39 @@
-import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import Calendar from '@/components/calendar/Calendar';
+import {colors} from '@/constants';
+import {getMonthYearDetails, getNewMonthYear} from '@/utils';
+import React, {useState} from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 
 function CalendarHomeScreen() {
+  const currentMonthYear = getMonthYearDetails(new Date());
+  const [monthYear, setMonthYear] = useState(currentMonthYear);
+  const [selectedDate, setSelectedDate] = useState(0);
+
+  const handlePressDate = (date: number) => {
+    setSelectedDate(date);
+  };
+
+  const handleUpdateMonth = (increment: number) => {
+    setMonthYear(prev => getNewMonthYear(prev, increment));
+  };
+
   return (
-    <View>
-        <Text>캘린더 홈</Text>
-    </View>
-  )
+    <SafeAreaView style={styles.container}>
+      <Calendar
+        monthYear={monthYear}
+        onChangeMonth={handleUpdateMonth}
+        selectedDate={selectedDate}
+        onPressDate={handlePressDate}
+      />
+    </SafeAreaView>
+  );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.WHITE,
+  },
+});
 
 export default CalendarHomeScreen;
