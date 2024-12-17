@@ -1,139 +1,184 @@
-import { colors } from "@/constants";
-import { createContext, PropsWithChildren, ReactNode, useContext } from "react";
-import { ModalProps, Pressable, PressableProps, StyleSheet, Text, View, Modal, SafeAreaView, GestureResponderEvent } from "react-native";
+import {PropsWithChildren, ReactNode, createContext, useContext} from 'react';
+import {
+  GestureResponderEvent,
+  Modal,
+  ModalProps,
+  Pressable,
+  PressableProps,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-interface OptionContextValue{
-    onClickOutSide?: (event:GestureResponderEvent) => void;
+import {colors} from '@/constants';
+import useThemeStore from '@/store/useThemeStore';
+import {ThemeMode} from '@/types';
+
+interface OptionContextValue {
+  onClickOutSide?: (event: GestureResponderEvent) => void;
 }
 
-const OptionContext = createContext<OptionContextValue | undefined>(undefined)
+const OptionContext = createContext<OptionContextValue | undefined>(undefined);
 
-interface optionMainProps extends ModalProps {
-    children: ReactNode;
-    isVisible: boolean;
-    hideOption: () => void;
-    animationType?: ModalProps['animationType'];
+interface OptionMainProps extends ModalProps {
+  children: ReactNode;
+  isVisible: boolean;
+  hideOption: () => void;
+  animationType?: ModalProps['animationType'];
 }
 
-function optionMain({
-    children, 
-    isVisible, 
-    hideOption, 
-    animationType = 'slide',
-    ...props
-    }: optionMainProps) {
-        const onClickOutSide = (event:GestureResponderEvent)=>{
-            if(event.target === event.currentTarget){
-                hideOption();
-            }
-        };
+function OptionMain({
+  children,
+  isVisible,
+  hideOption,
+  animationType = 'slide',
+  ...props
+}: OptionMainProps) {
+  const onClickOutSide = (event: GestureResponderEvent) => {
+    if (event.target === event.currentTarget) {
+      hideOption();
+    }
+  };
 
-    return <Modal 
-            visible={isVisible} 
-            transparent={true} 
-            animationType={animationType}
-            onRequestClose={hideOption}
-            {...props}>
-            <OptionContext.Provider value={{onClickOutSide}}>
-                {children}
-            </OptionContext.Provider>
-    </Modal>
-};
-
-function Background({children}:PropsWithChildren){
-    const optionContext = useContext(OptionContext);
-
-    return(
-        <SafeAreaView onTouchEnd={optionContext?.onClickOutSide} style={styles.optionBackground}>
-            {children}
-        </SafeAreaView>
-    )
-}
-
-function Container({children}:PropsWithChildren){
-    return <View style={styles.optionContainer}>
+  return (
+    <Modal
+      visible={isVisible}
+      transparent={true}
+      animationType={animationType}
+      onRequestClose={hideOption}
+      {...props}>
+      <OptionContext.Provider value={{onClickOutSide}}>
         {children}
-    </View>
-};
+      </OptionContext.Provider>
+    </Modal>
+  );
+}
+
+function Background({children}: PropsWithChildren) {
+  const optionContext = useContext(OptionContext);
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
+  return (
+    <SafeAreaView
+      style={styles.optionBackground}
+      onTouchEnd={optionContext?.onClickOutSide}>
+      {children}
+    </SafeAreaView>
+  );
+}
+
+function Container({children}: PropsWithChildren) {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
+  return <View style={styles.optionContainer}>{children}</View>;
+}
 
 interface ButtonProps extends PressableProps {
-    children: ReactNode;
-    isDanger?: boolean;
+  children: ReactNode;
+  isDanger?: boolean;
+  isChecked?: boolean;
 }
 
-function Button({children, isDanger = false, ...props}: ButtonProps){
-    return(
-        <Pressable style={({pressed})=>[
-            pressed && styles.optionButtonPressed,
-            styles.optionButton,
-        ]} {...props}>
-            <Text style={[styles.optionText, isDanger && styles.dangerText]}>{children}</Text>
-        </Pressable>
-    )
-};
+function Button({
+  children,
+  isDanger = false,
+  isChecked = false,
+  ...props
+}: ButtonProps) {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
 
-function Title({children}: PropsWithChildren){
-    return(
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{children}</Text>
-        </View>
-    )
-};
+  return (
+    <Pressable
+      style={({pressed}) => [
+        pressed && styles.optionButtonPressed,
+        styles.optionButton,
+      ]}
+      {...props}>
+      <Text style={[styles.optionText, isDanger && styles.dangerText]}>
+        {children}
+      </Text>
 
-function Divider(){
-    return <View style={styles.border} />
-};
+      {isChecked && (
+        <Ionicons name="checkmark" size={20} color={colors[theme].BLUE_500} />
+      )}
+    </Pressable>
+  );
+}
 
-export const CompoundOption = Object.assign(optionMain, {
-    Background,
-    Container,
-    Button,
-    Title,
-    Divider,
+function Title({children}: PropsWithChildren) {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
+  return (
+    <View style={styles.titleContainer}>
+      <Text style={styles.titleText}>{children}</Text>
+    </View>
+  );
+}
+
+function Divider() {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
+  return <View style={styles.border} />;
+}
+
+export const CompoundOption = Object.assign(OptionMain, {
+  Container,
+  Background,
+  Button,
+  Title,
+  Divider,
 });
 
-const styles = StyleSheet.create({
+const styling = (theme: ThemeMode) =>
+  StyleSheet.create({
     optionBackground: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        backgroundColor: 'rgba(0 0 0 / 0.5)',
+      flex: 1,
+      justifyContent: 'flex-end',
+      backgroundColor: 'rgba(0 0 0 / 0.5)',
     },
     optionContainer: {
-        borderRadius: 15,
-        marginHorizontal: 10,
-        marginBottom: 10,
-        backgroundColor: colors.GRAY_100,
-        overflow: 'hidden',
+      borderRadius: 15,
+      marginHorizontal: 10,
+      marginBottom: 10,
+      backgroundColor: colors[theme].GRAY_100,
+      overflow: 'hidden',
     },
     optionButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 50,
-        gap: 5,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: 50,
+      gap: 5,
     },
     optionButtonPressed: {
-        backgroundColor: colors.GRAY_200,
+      backgroundColor: colors[theme].GRAY_200,
     },
     optionText: {
-        fontSize: 17,
-        color: colors.BLUE_500,
-        fontWeight: '500',
+      fontSize: 17,
+      color: colors[theme].BLUE_500,
+      fontWeight: '500',
     },
     dangerText: {
-        color: colors.RED_500,
+      color: colors[theme].RED_500,
     },
     titleContainer: {
-        alignItems: 'center',
-        padding: 15,
+      alignItems: 'center',
+      padding: 15,
     },
     titleText: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: colors.BLACK,
+      fontSize: 16,
+      fontWeight: '500',
+      color: colors[theme].BLACK,
     },
     border: {
-        borderBottomColor: colors.GRAY_200,
-        borderWidth: 1,
+      borderBottomColor: colors[theme].GRAY_200,
+      borderBottomWidth: 1,
     },
-});
+  });

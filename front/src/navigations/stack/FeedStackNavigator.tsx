@@ -1,13 +1,14 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {LatLng} from 'react-native-maps';
 
 import {colors, feedNavigations} from '@/constants';
 import FeedHomeScreen from '@/screens/feed/FeedHomeScreen';
-import FeedHomeHeaderLeft from '@/components/feed/FeedHomeHeaderLeft';
 import FeedDetailScreen from '@/screens/feed/FeedDetailScreen';
-import { LatLng } from 'react-native-maps';
 import EditPostScreen from '@/screens/feed/EditPostScreen';
 import ImageZoomScreen from '@/screens/feed/ImageZoomScreen';
+import FeedHomeHeaderLeft from '@/components/feed/FeedHomeHeaderLeft';
+import useThemeStore from '@/store/useThemeStore';
 
 export type FeedStackParamList = {
   [feedNavigations.FEED_HOME]: undefined;
@@ -19,27 +20,29 @@ export type FeedStackParamList = {
 const Stack = createStackNavigator<FeedStackParamList>();
 
 function FeedStackNavigator() {
+  const {theme} = useThemeStore();
+
   return (
     <Stack.Navigator
       screenOptions={{
         cardStyle: {
-          backgroundColor: 'white',
+          backgroundColor: colors[theme].WHITE,
         },
         headerStyle: {
-          shadowColor: 'gray',
-          backgroundColor: 'white',
+          shadowColor: colors[theme].GRAY_200,
+          backgroundColor: colors[theme].WHITE,
         },
         headerTitleStyle: {
           fontSize: 15,
         },
-        headerTintColor: 'black',
+        headerTintColor: colors[theme].BLACK,
       }}>
       <Stack.Screen
         name={feedNavigations.FEED_HOME}
         component={FeedHomeScreen}
         options={({navigation}) => ({
           headerTitle: '피드',
-          headerLeft: ()=> FeedHomeHeaderLeft(navigation),
+          headerLeft: () => FeedHomeHeaderLeft(navigation),
         })}
       />
       <Stack.Screen
@@ -49,19 +52,19 @@ function FeedStackNavigator() {
           headerShown: false,
           headerTitle: ' ',
           cardStyle: {
-            backgroundColor: colors.GRAY_100,
-          }
+            backgroundColor: colors[theme].GRAY_100,
+          },
         }}
       />
-      <Stack.Screen 
-        name= {feedNavigations.EDIT_POST}
+      <Stack.Screen
+        name={feedNavigations.EDIT_POST}
         component={EditPostScreen}
         options={{
-          headerTitle: '장소 수정'
+          headerTitle: '장소 수정',
         }}
       />
-      <Stack.Screen 
-        name= {feedNavigations.IMAGE_ZOOM}
+      <Stack.Screen
+        name={feedNavigations.IMAGE_ZOOM}
         component={ImageZoomScreen}
         options={{
           headerTitle: ' ',
@@ -69,7 +72,6 @@ function FeedStackNavigator() {
         }}
       />
     </Stack.Navigator>
-    
   );
 }
 

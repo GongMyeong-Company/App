@@ -1,3 +1,9 @@
+import { Category } from "@/types";
+
+function isBlank(value: string) {
+  return value.trim() === '';
+}
+
 type UserInfomation = {
   email: string;
   password: string;
@@ -34,16 +40,43 @@ function validateSignup(values: UserInfomation & {passwordConfirm: string}) {
   return signupErrors;
 }
 
-function validateAddPost(values: {title:string}) {
+function validateAddPost(values: {title: string}) {
   const errors = {
     title: '',
     description: '',
   };
-  if(values.title.trim() === ''){
-    errors.title = '제목은 1~30자 이내로 입력해주세요.';
+
+  if (isBlank(values.title)) {
+    errors.title = `제목은 1~30자 이내로 입력해주세요.`;
   }
 
   return errors;
-};
+}
 
-export {validateLogin, validateSignup, validateAddPost};
+function validateEditProfile(values: {nickname: string}) {
+  const errors = {
+    nickname: '',
+  };
+
+  if (isBlank(values.nickname)) {
+    errors.nickname = '닉네임을 입력해주세요.';
+  }
+
+  return errors;
+}
+
+function validateCategory(values: Category){
+  const errors = {
+    RED: '',
+    GREEN: '',
+    BLUE: '',
+    PURPLE: '',
+    YELLOW: '',
+  };
+
+
+
+  return errors;
+}
+
+export {validateLogin, validateSignup, validateAddPost, validateEditProfile, validateCategory};

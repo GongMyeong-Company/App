@@ -137,6 +137,8 @@ export class AuthService {
         '프로필 수정 도중 에러가 발생했습니다.',
       );
     }
+
+    const { password, hashedRefreshToken, ...rest } = profile;      return { ...rest };
   }
 
   async deleteRefreshToken(user: User) {

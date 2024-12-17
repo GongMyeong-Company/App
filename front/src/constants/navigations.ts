@@ -2,17 +2,20 @@ const mainNavigations = {
   HOME: 'Home',
   FEED: 'Feed',
   CALENDAR: 'Calendar',
+  SETTING: 'Setting',
 } as const;
 
 const authNavigations = {
   AUTH_HOME: 'AuthHome',
   LOGIN: 'Login',
   SIGNUP: 'Signup',
+  KAKAO: 'Kakao',
 } as const;
 
 const mapNavigations = {
   MAP_HOME: 'MapHome',
   ADD_POST: 'AddPost',
+  SEARCH_LOCATION: 'SearchLocation',
 } as const;
 
 const feedNavigations = {
@@ -28,4 +31,18 @@ const feedTabNavigations = {
   FEED_SEARCH: 'FeedSearch',
 } as const;
 
-export {mainNavigations, authNavigations, mapNavigations, feedNavigations, feedTabNavigations};
+const settingNavigations = {
+  SETTING_HOME: 'SettingHome',
+  EDIT_PROFILE: 'EditProfile',
+  DELETE_ACCOUNT: 'DeleteAccount',
+  EDIT_CATEGORY: 'EditCategory',
+} as const;
+
+export {
+  mainNavigations,
+  authNavigations,
+  mapNavigations,
+  feedNavigations,
+  feedTabNavigations,
+  settingNavigations,
+};
