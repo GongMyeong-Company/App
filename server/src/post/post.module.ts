@@ -7,8 +7,8 @@ import { AuthModule } from 'src/auth/auth.module';
 import { Image } from 'src/image/image.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post, Image]), AuthModule],
+  imports: [TypeOrmModule.forFeature([Post, Image]), AuthModule], 
   controllers: [PostController],
-  providers: [PostService],
+  providers: [PostService]
 })
 export class PostModule {}

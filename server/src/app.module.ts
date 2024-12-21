@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import {TypeOrmModule} from '@nestjs/typeorm'
 import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -10,7 +10,7 @@ import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,

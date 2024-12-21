@@ -8,6 +8,6 @@ import { AuthModule } from 'src/auth/auth.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Favorite]), AuthModule],
   controllers: [FavoriteController],
-  providers: [FavoriteService],
+  providers: [FavoriteService]
 })
 export class FavoriteModule {}

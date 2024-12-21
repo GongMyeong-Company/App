@@ -2,10 +2,7 @@ import axios from 'axios';
 import {Platform} from 'react-native';
 
 const axiosInstance = axios.create({
-  baseURL:
-    Platform.OS === 'android'
-      ? 'http://10.0.2.2:3030'
-      : 'http://localhost:3030',
+  baseURL: 'http://13.209.4.135:3000',  
   withCredentials: true,
 });
 
